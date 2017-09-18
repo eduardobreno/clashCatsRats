@@ -591,9 +591,9 @@ PlayerSettings:
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 2eba21a3-a5c5-4d67-a813-1fb784ad76fd
-  projectName: TowerDefenseCatRat
-  organizationId: eduardobreno
+  cloudProjectId: 
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
