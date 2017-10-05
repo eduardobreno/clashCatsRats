@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: fb4c1b528df076b40b454140c19817ee
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Game/Scenes/Teste.unity
     guid: 6c40293fe7e33a84fb2a6d5b5f2603b0
+  - enabled: 1
+    path: Assets/Photon Unity Networking/Demos/DemoRockPaperScissors/DemoRPS-Scene.unity
+    guid: 8a3480dd507edcd40b9a02e219e22da6
