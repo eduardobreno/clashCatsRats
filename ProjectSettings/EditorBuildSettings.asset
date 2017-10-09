@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/_Game/Scenes/Teste.unity
     guid: 6c40293fe7e33a84fb2a6d5b5f2603b0
-  - enabled: 1
-    path: Assets/Photon Unity Networking/Demos/DemoRockPaperScissors/DemoRPS-Scene.unity
+  - enabled: 0
+    path: Assets/Packages/Photon Unity Networking/Demos/DemoRockPaperScissors/DemoRPS-Scene.unity
     guid: 8a3480dd507edcd40b9a02e219e22da6
+  - enabled: 1
+    path: Assets/_Game/Scenes/TesteNetwork.unity
+    guid: 60c07f84b213ff24e9073a41aa05511c
