@@ -97,8 +97,15 @@ public class RpsCore : PunBehaviour, IPunTurnManagerCallbacks
         LocalLoss
     }
 
+	private Spawn spawn;
+	public GameObject player;
+
     public void Start()
     {
+
+		spawn = GameObject.Find ("GameManager").GetComponent<Spawn> ();
+
+
 		this.turnManager = this.gameObject.AddComponent<PunTurnManager>();
         this.turnManager.TurnManagerListener = this;
         this.turnManager.TurnDuration = 5f;
@@ -236,6 +243,7 @@ public class RpsCore : PunBehaviour, IPunTurnManagerCallbacks
     /// <summary>Called when a turn begins (Master Client set a new Turn number).</summary>
     public void OnTurnBegins(int turn)
     {
+		spawn.destroyObject ();
         Debug.Log("OnTurnBegins() turn: "+ turn);
         this.localSelection = Hand.None;
         this.remoteSelection = Hand.None;
@@ -256,7 +264,8 @@ public class RpsCore : PunBehaviour, IPunTurnManagerCallbacks
 
         this.CalculateWinAndLoss();
         this.UpdateScores();
-        this.OnEndTurn();
+		spawn.SpawnObject (player);
+        //this.OnEndTurn();
     }
 
 

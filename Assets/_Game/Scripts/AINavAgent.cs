@@ -14,14 +14,14 @@ public class AINavAgent : MonoBehaviour
 	bool walkBack = false;
 	int wayPointIndex = 0;
 	private Animator anim;
-
-
+	private RpsCore rpsCore;
 	Vector3 prevLoc = Vector3.zero;
 
 	void Start ()
 	{
 		navAgent = GetComponent<NavMeshAgent> ();
 		anim = GetComponentInChildren<Animator> ();
+		rpsCore = GameObject.Find ("Scripts").GetComponent<RpsCore> ();
 
 		initWayPoints ();
 	}
@@ -36,7 +36,8 @@ public class AINavAgent : MonoBehaviour
 		}
 	}
 
-	void OnCollisionEnter(Collision collision) {
+	void OnCollisionEnter (Collision collision)
+	{
 		if (collision.gameObject.tag == "Player") {
 			print ("FIGHT");
 		}
@@ -54,21 +55,11 @@ public class AINavAgent : MonoBehaviour
 
 	void checkNextWayPoint ()
 	{
-		if (waypoints.Count > 1) {
-			if (Vector3.Distance (transform.position, waypoints [wayPointIndex].position) > 1) {
-				if (waypoints.Count - 1 == wayPointIndex) {
-					GetComponent<Animator> ().SetTrigger ("HandAttackRight");
-					GetComponent<Animator> ().SetBool ("walk", false);
-				} else {
-					walkTo (waypoints [wayPointIndex].position);
-				}
-			} else {
-				wayPointIndex = (walkBack) ? --wayPointIndex : ++wayPointIndex;
-				if (wayPointIndex == (waypoints.Count - 1))
-					walkBack = true;
-				if (wayPointIndex == 0)
-					walkBack = false;
-			}
+		walkTo (waypoints [wayPointIndex].position);
+		if (Vector3.Distance (transform.position, waypoints [wayPointIndex].position) < 1) {
+			rpsCore.OnEndTurn ();
+			GetComponent<Animator> ().SetTrigger ("HandAttackRight");
+			GetComponent<Animator> ().SetBool ("walk", false);
 		}
 	}
 
@@ -79,13 +70,14 @@ public class AINavAgent : MonoBehaviour
 	}
 
 	#if UNITY_EDITOR
-	void OnDrawGizmosSelected () {
-			// Draws a blue line from this transform to the target
-			Gizmos.color = Color.white;
-			Transform children = waypoint.transform;
-			for (int i = 0; i < children.childCount-1; i++) {
-				Gizmos.DrawLine (children.GetChild (i).transform.position, children.GetChild (i+1).transform.position);
-			}
+	void OnDrawGizmosSelected ()
+	{
+		// Draws a blue line from this transform to the target
+		Gizmos.color = Color.white;
+		Transform children = waypoint.transform;
+		for (int i = 0; i < children.childCount - 1; i++) {
+			Gizmos.DrawLine (children.GetChild (i).transform.position, children.GetChild (i + 1).transform.position);
+		}
 	}
 	#endif
 }

@@ -14,6 +14,8 @@ public class Spawn : MonoBehaviour
 	public SIDES player;
 	public SIDES computer;
 	public GameObject enemy;
+	private GameObject p1;
+	private GameObject p2;
 
 	void Start ()
 	{
@@ -25,7 +27,12 @@ public class Spawn : MonoBehaviour
 
 	public void SpawnObject (GameObject player)
 	{
-		Instantiate (player, spawnA.transform.position, spawnA.transform.rotation);
+		p1 = Instantiate (player, spawnA.transform.position, spawnA.transform.rotation);
+		p2 = Instantiate (player, spawnB.transform.position, spawnB.transform.rotation);
+	}
+	public void destroyObject(){
+		Destroy (p1);
+		Destroy (p2);
 	}
 
 	void SpawnAutomatic ()
