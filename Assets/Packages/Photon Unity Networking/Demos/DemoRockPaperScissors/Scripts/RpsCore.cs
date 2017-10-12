@@ -4,6 +4,8 @@ using Photon;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using System.Collections.Generic;
+
 
 using ExitGames.Client.Photon;
 
@@ -98,13 +100,14 @@ public class RpsCore : PunBehaviour, IPunTurnManagerCallbacks
     }
 
 	private Spawn spawn;
+	private List<GameObject> sparr;
 	public GameObject player;
 
     public void Start()
     {
 
 		spawn = GameObject.Find ("GameManager").GetComponent<Spawn> ();
-
+		sparr = new List<GameObject>();
 
 		this.turnManager = this.gameObject.AddComponent<PunTurnManager>();
         this.turnManager.TurnManagerListener = this;
@@ -243,7 +246,6 @@ public class RpsCore : PunBehaviour, IPunTurnManagerCallbacks
     /// <summary>Called when a turn begins (Master Client set a new Turn number).</summary>
     public void OnTurnBegins(int turn)
     {
-		spawn.destroyObject ();
         Debug.Log("OnTurnBegins() turn: "+ turn);
         this.localSelection = Hand.None;
         this.remoteSelection = Hand.None;
@@ -264,8 +266,11 @@ public class RpsCore : PunBehaviour, IPunTurnManagerCallbacks
 
         this.CalculateWinAndLoss();
         this.UpdateScores();
-		spawn.SpawnObject (player);
-        //this.OnEndTurn();
+		if (sparr.Count < 1) {
+			sparr = spawn.SpawnObject (player);
+		}
+		StartCoroutine(this.OnEndTurn());
+
     }
 
 
@@ -330,8 +335,11 @@ public class RpsCore : PunBehaviour, IPunTurnManagerCallbacks
         this.turnManager.SendMove((byte)selection, true);
     }
 	
-    public void OnEndTurn()
+	IEnumerator OnEndTurn()
     {
+		yield return new WaitForSeconds(7);
+		spawn.destroyObject (sparr);
+		sparr = new List<GameObject>();
         this.StartCoroutine("ShowResultsBeginNextTurnCoroutine");
     }
 

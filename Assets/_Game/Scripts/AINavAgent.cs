@@ -57,7 +57,7 @@ public class AINavAgent : MonoBehaviour
 	{
 		walkTo (waypoints [wayPointIndex].position);
 		if (Vector3.Distance (transform.position, waypoints [wayPointIndex].position) < 1) {
-			rpsCore.OnEndTurn ();
+			//rpsCore.OnEndTurn()
 			GetComponent<Animator> ().SetTrigger ("HandAttackRight");
 			GetComponent<Animator> ().SetBool ("walk", false);
 		}
